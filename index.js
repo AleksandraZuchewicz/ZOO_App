@@ -1,3 +1,30 @@
+let FRUITS = {
+  BANANA: "Banana",
+  GRAPES: "Grapes"
+};
+let MEATS = {
+  PORK: "Pork",
+  CHICKEN: "Chicken"
+};
+let TRICK_NAMES = {
+  CLAP: "clap",
+  SIT: "sit",
+  HOP: "hop"
+};
+let tricks = {
+  clap: function() {
+    let trickClap = new Event(this.kind + " named " + this.name + " clapped.");
+    trickClap.emit();
+  },
+  sit: function() {
+    let trickSit = new Event(this.kind + " named " + this.name + " sat.");
+    trickSit.emit();
+  },
+  hop: function() {
+    let trickHop = new Event(this.kind + " named " + this.name + " hopped.");
+    trickHop.emit();
+  }
+};
 class Event {
   constructor(eventDesc) {
     this.eventDesc = eventDesc;
@@ -19,7 +46,7 @@ class Cat extends Animal {
     super(id, kind, name);
   }
   eat(meat) {
-    let eatMeat = new Event(kind + " named " + name + " ate " + meat);
+    let eatMeat = new Event(this.kind + " named " + this.name + " ate " + meat);
     eatMeat.emit();
   }
 }
@@ -38,7 +65,9 @@ class Monkey extends Animal {
     super(id, kind, name);
   }
   eat(fruit) {
-    let eatFruit = new Event(kind + " named " + name + " ate " + fruit);
+    let eatFruit = new Event(
+      this.kind + " named " + this.name + " ate " + fruit
+    );
     eatFruit.emit();
   }
 }
@@ -65,12 +94,14 @@ class Feeder extends Employee {
   }
   feed(animal) {}
 }
-class Traineer extends Employee {
-  constructor(id, role, name) {
+class Trainer extends Employee {
+  constructor(id, name) {
     super(id, name);
-    this.role = role;
+    this.role = "Trainer";
   }
-  train(animal, trick) {}
+  train(animal, trick) {
+    animal[trick] = tricks[trick];
+  }
 }
 class ZOO {
   constructor(name) {
@@ -79,11 +110,36 @@ class ZOO {
     this.employees = [];
     this.events = [];
   }
-  addAnimal(animal) {}
+  addAnimal(animal) {
+    this.animals.push(animal);
+  }
   removeAnimal(animal) {}
-  showAnimals() {}
+  showAnimals() {
+    return this.animals;
+  }
   addEmployee(employee) {}
   removeEmployee(employee) {}
   showEmployees() {}
 }
 let zooSingleton = new ZOO("Wrocławskie Zoo");
+let baboonMax = new Baboon(1, "Baboon", "Max");
+zooSingleton.addAnimal(baboonMax);
+baboonMax.eat(FRUITS.BANANA);
+let trainerMark = new Trainer(1, "Mark");
+trainerMark.train(baboonMax, TRICK_NAMES.HOP);
+baboonMax.hop();
+console.log(zooSingleton.animals);
+console.log(zooSingleton.events);
+//Unit tests
+function testMonkeyEat() {
+  let newMonkey = new Monkey(99, "Baboon", "Rex");
+  newMonkey.eat(FRUITS.GRAPES);
+  const lastEventIndex = zooSingleton.events.length - 1;
+  // assertion
+  if (zooSingleton.events[lastEventIndex] == "Baboon named Rex ate Grapes") {
+    console.log("testMonkeyEat passed");
+  } else {
+    console.log("testMonkeyEat failed");
+  }
+}
+testMonkeyEat();
