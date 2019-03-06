@@ -14,7 +14,7 @@ class Feeder extends Employee {
   feed(animal) {
     let food;
     if (animal instanceof Animals.Cat) {
-      food = Items.MEAT.PORK;
+      food = Items.MEATS.PORK;
     }
     if (animal instanceof Animals.Monkey) {
       food = Items.FRUITS.BANANA;

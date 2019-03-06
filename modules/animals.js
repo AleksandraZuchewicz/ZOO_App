@@ -5,6 +5,10 @@ class Animal {
     this.kind = kind;
     this.name = name;
     this.hunger = 100;
+    let newBornAnimal = new Event(
+      this.kind + " named " + this.name + " has been born."
+    );
+    newBornAnimal.emit();
   }
   eat(food) {}
 }
@@ -19,13 +23,13 @@ class Cat extends Animal {
   }
 }
 class Tiger extends Cat {
-  constructor(id, kind, name) {
-    super(id, kind, name);
+  constructor(id, name) {
+    super(id, "Tiger", name);
   }
 }
 class Lion extends Cat {
-  constructor(id, kind, name) {
-    super(id, kind, name);
+  constructor(id, name) {
+    super(id, "Lion", name);
   }
 }
 class Monkey extends Animal {
@@ -41,13 +45,13 @@ class Monkey extends Animal {
   }
 }
 class Baboon extends Monkey {
-  constructor(id, kind, name) {
-    super(id, kind, name);
+  constructor(id, name) {
+    super(id, "Baboon", name);
   }
 }
 class Chimpanzee extends Monkey {
-  constructor(id, kind, name) {
-    super(id, kind, name);
+  constructor(id, name) {
+    super(id, "Chimpanzee", name);
   }
 }
 module.exports = function(event) {
