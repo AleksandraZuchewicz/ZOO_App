@@ -1,14 +1,16 @@
+let currentId = 0;
 let Items;
 let Animals;
 class Employee {
-  constructor(id, name) {
-    this.id = id;
+  constructor(name) {
+    this.id = currentId;
+    currentId++;
     this.name = name;
   }
 }
 class Feeder extends Employee {
-  constructor(id, name) {
-    super(id, name);
+  constructor(name) {
+    super(name);
     this.role = "Feeder";
   }
   feed(animal) {
@@ -23,12 +25,13 @@ class Feeder extends Employee {
   }
 }
 class Trainer extends Employee {
-  constructor(id, name) {
-    super(id, name);
+  constructor(name) {
+    super(name);
     this.role = "Trainer";
   }
   train(animal, trick) {
     animal[trick] = Items.tricks[trick];
+    animal.tricks.push(trick);
   }
 }
 module.exports = function(items, animals) {

@@ -1,10 +1,13 @@
+let currentId = 0;
 let Event;
 class Animal {
-  constructor(id, kind, name) {
-    this.id = id;
+  constructor(kind, name) {
+    this.id = currentId;
+    currentId++;
     this.kind = kind;
     this.name = name;
     this.hunger = 100;
+    this.tricks = [];
     let newBornAnimal = new Event(
       this.kind + " named " + this.name + " has been born."
     );
@@ -13,8 +16,8 @@ class Animal {
   eat(food) {}
 }
 class Cat extends Animal {
-  constructor(id, kind, name) {
-    super(id, kind, name);
+  constructor(kind, name) {
+    super(kind, name);
   }
   eat(meat) {
     let eatMeat = new Event(this.kind + " named " + this.name + " ate " + meat);
@@ -23,18 +26,18 @@ class Cat extends Animal {
   }
 }
 class Tiger extends Cat {
-  constructor(id, name) {
-    super(id, "Tiger", name);
+  constructor(name) {
+    super("Tiger", name);
   }
 }
 class Lion extends Cat {
-  constructor(id, name) {
-    super(id, "Lion", name);
+  constructor(name) {
+    super("Lion", name);
   }
 }
 class Monkey extends Animal {
-  constructor(id, kind, name) {
-    super(id, kind, name);
+  constructor(kind, name) {
+    super(kind, name);
   }
   eat(fruit) {
     let eatFruit = new Event(
@@ -45,13 +48,13 @@ class Monkey extends Animal {
   }
 }
 class Baboon extends Monkey {
-  constructor(id, name) {
-    super(id, "Baboon", name);
+  constructor(name) {
+    super("Baboon", name);
   }
 }
 class Chimpanzee extends Monkey {
-  constructor(id, name) {
-    super(id, "Chimpanzee", name);
+  constructor(name) {
+    super("Chimpanzee", name);
   }
 }
 module.exports = function(event) {
