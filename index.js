@@ -1,6 +1,14 @@
 var express = require("express");
 var app = express();
 app.use(express.json());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 let ZOO = require("./modules/zoo.js");
 let zooSingleton = new ZOO("Wrocławskie Zoo");
 let EventInitializer = require("./modules/event.js");
@@ -11,7 +19,7 @@ let Animals = AnimalsInitializer(Event);
 let ItemsInitializer = require("./modules/items.js");
 let Items = ItemsInitializer(Event);
 let EmployeesInitializer = require("./modules/employees.js");
-let Employees = EmployeesInitializer(Items, Animals);
+let Employees = EmployeesInitializer(Items, Animals, Event);
 let HandlersInitializer = require("./modules/handlers.js");
 let Handlers = HandlersInitializer(zooSingleton, Animals, Employees, Items);
 

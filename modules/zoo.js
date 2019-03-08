@@ -13,7 +13,7 @@ class ZOO {
     for (let i = 0; i < this.animals.length; i++) {
       let currentAnimal = this.animals[i];
       if (currentAnimal.id == animalId) {
-        currentAnimal = this.animals.splice(i, 1);
+        currentAnimal = this.animals.splice(i, 1)[0];
         let removedAnimal = new Event(
           currentAnimal.kind +
             " named " +
@@ -79,7 +79,7 @@ class ZOO {
     this.getAnimals().forEach(function(animal, index, animals) {
       animal.hunger--;
       if (animal.hunger < 0) {
-        self.removeAnimal(animal);
+        self.removeAnimal(animal.id);
         let deadAnimal = new Event(
           animal.kind + " named " + animal.name + " died from hunger."
         );
